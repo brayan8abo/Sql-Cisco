@@ -1,0 +1,77 @@
+ip dhcp pool vlan10
+network (direccion ip y mascara) 172.16.10.0 255.255.255.0
+dns-server 172.16.50.2
+default-router 172.16.10.1
+
+
+
+Router>enable
+Router#confi
+Router#configure 
+Router#configure terminal 
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#inte
+Router(config)#interface gig
+Router(config)#interface gigabitEthernet 0/0/0.10
+Router(config-subif)#ienc
+Router(config-subif)#encapsulation dot
+Router(config-subif)#encapsulation dot1Q 
+% Incomplete command.
+Router(config-subif)#encapsulation dot1Q 10
+Router(config-subif)#ip ad
+Router(config-subif)#ip address 172.16.10.1 255.255.255.0
+Router(config-subif)#no shu
+Router(config-subif)#no shutdown 
+Routeipinterface gigabitEthernet 0/0/0.10interface gigabitEthip address 172encapsulation dot1Q 10encapsulip address 172.16.10.1 255.255.255.0ip address 172.16.20.1 2interface gigabitEtherno shutdowipinterface gigabitEthernet 0/0/exitexit
+Router(config)#
+Router(config)#
+Router(config)#
+Router(config)#
+Router(config)#interface GigabitEthernet0/0/0
+Router(config-if)#
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0/2
+Router(config-if)#
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0/1
+Router(config-if)#
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0/0
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/0, changed state to up
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/0.10, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/0.10, changed state to up
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/0.20, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/0.20, changed state to up
+
+Router(config-if)#
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0/1
+Router(config-if)#
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0/0
+Router(config-if)#ip address 172.16.100.1 255.255.255.0
+Router(config-if)#ip address 172.16.100.1 255.255.255.0
+Router(config-if)#exit
+Router(config)#ip dh
+Router(config)#ip dhcp p
+Router(config)#ip dhcp pool vlan10
+Router(dhcp-config)#net
+Router(dhcp-config)#network 172.16.10.0 255.255.255.0
+Router(dhcp-config)#dn
+Router(dhcp-config)#dns-server 172.16.50.2
+Router(dhcp-config)#de
+Router(dhcp-config)#default-router 172.16.10.1
+Router(dhcp-config)#exit
+Router(config)#ip dhcp pool vlan20
+Router(dhcp-config)#network 172.16.20.0 255.255.255.0
+Router(dhcp-config)#dns-server 172.16.50.2
+Router(dhcp-config)#default-router 172.16.20.1
+Router(dhcp-config)#exit
