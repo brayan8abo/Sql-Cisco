@@ -1,0 +1,33 @@
+DHCP -- le da ip mask puerta enlace dns al ordenador 
+
+ROUTER
+CLI
+
+ENABLE
+IP DHCP POOL NOMBREPOOL si es una vlan se puede poner el nombre de la vlan
+	dchp-config
+network ip red #### mask red #####
+dns-server ip del DNS
+default router ip de la puerta de enlace
+exit
+
+	save
+
+
+VLAN
+ROUTER
+ROUTER(CONFIG(
+	interface fastEthernet o GigaBit 0/0.10 o 0/0/0.10
+		config-sub-if
+encapsuladion dot1Q numero VLAN 10 o el numero que sea
+ip address (ip puerta enlace y mascara)
+no shutdown
+exit
+	 y se repite por cada VLAN que tengamos 
+
+
+
+SALTOS DE ROUTER
+
+
+
