@@ -1009,8 +1009,6 @@ call asignarCorreo();
 /*Este procedimiento hará uso del procedimiento crear_email que hemos creado en el paso anterior.
 3. Escribe un procedimiento llamado crear_lista_emails_alumnos que devuelva la lista de emails de la tabla alumnos separados por un punto y coma. Ejemplo: juan@ccc.org; maria@ccc.org; pepe@ccc.org; lucia@ccc.org .*/
 
-delimiter $$
-drop procedure listaCorreos if exist
 
 
 
