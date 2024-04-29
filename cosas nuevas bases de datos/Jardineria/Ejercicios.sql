@@ -827,18 +827,187 @@ INSERT INTO cuentas VALUES (2,5);
 
 
 
+/*1.8.7 Cursores
+1. Escribe las sentencias SQL necesarias para crear una base de datos llamada test, una tabla llamada alumnos y 4 sentencias de inserción para inicializar la tabla. La tabla alumnos está formada por las siguientes columnas:
+• id (entero sin signo y clave primaria)
+• nombre (cadena de caracteres)
+• apellido1 (cadena de caracteres)
+• apellido2 (cadena de caracteres
+• fecha_nacimiento (fecha)
+Una vez creada la tabla se decide añadir una nueva columna a la tabla llamada edad que será un valor calculado a partir de la columna fecha_nacimiento. Escriba la sentencia SQL necesaria para modificar la tabla y añadir la nueva columna.*/
+
+DROP TABLE IF EXISTS alumnos;
+CREATE TABLE alumnos(
+    id INT UNSIGNED,
+    nombre VARCHAR(50),
+    apellido1 VARCHAR(50),
+    apellido2 VARCHAR(50),
+    fecha_nacimiento DATE,
+    PRIMARY KEY(id)
+);
+
+INSERT INTO alumnos VALUES (1, 'Jose', 'Lopez', 'Ruiz', '2000-02-12');
+INSERT INTO alumnos VALUES (2, 'Pepito', 'Perez', 'Zuluaga', '2004-03-08');
+insert into alumnos values (3,'Brayan','Ochoa','Botero','2000-08-11');
+
+alter table alumnos drop email;
+alter table alumnos drop edad;
+
+alter table alumnos add edad int;
+
+-- Escriba una función llamada calcular_edad que reciba una fecha y 
+-- devuelva el número de años que han pasado desde la fecha actual 
+-- hasta la fecha pasada como parámetro:
+-- 		Función: calcular_edad
+-- 		Entrada: Fecha
+-- 		Salida: Número de años (entero)
+
+delimiter $$
+drop function if exists calcular_edad$$
+create function calcular_edad(fecha date)
+returns int -- devolvemos un entero
+begin  
+return truncate(datediff(current_date(),fecha)/365,1); -- con el truncate borro todos los datos, y con el datediff el intervalo de tiempo
+end
+$$
+delimiter ;
+
+select calcular_edad('2000-08-11');
+
+/*Ahora escriba un procedimiento que permita calcular la edad de todos los alumnos que ya existen en la tabla.
+Para esto será necesario crear un procedimiento llamado actualizar_columna_edad que calcule la edad de cada alumno y actualice la tabla. 
+Este procedimiento hará uso de la función calcular_edad que hemos creado en el paso anterior.*/
+
+delimiter $$
+drop procedure if exists actualizar_edad$$
+create procedure actualizar_edad()
+begin
+declare accion int default false;
+declare fecha DATE;
+declare contador int;
+declare cur1 cursor for select id,fecha_nacimiento from alumnos;
+declare continue handler for not found set accion = true;
+
+open cur1;
+
+bucle:loop
+fetch cur1 into contador, fecha;
+if accion then
+leave bucle;
+end if;
+update alumnos set edad = calcular_edad(fecha)
+where contador = id;
+end loop;
+close cur1;
+end
+$$
+delimiter ;
+
+call actualizar_edad();
+select * from alumnos;
 
 
+-- 2. Modifica la tabla alumnos del ejercicio anterior para añadir una nueva columna email. Una vez que hemos modificado la tabla necesitamos asignarle una dirección de correo electrónico de forma automática.
+
+alter table alumnos add email varchar (50);
+
+/*Escriba un procedimiento llamado crear_email que dados los parámetros de entrada: nombre, apellido1, apellido2 y dominio, cree una dirección de email y la devuelva como salida.
+• Procedimiento: crear_email
+• Entrada:
+– nombre (cadena de caracteres)
+– apellido1 (cadena de caracteres)
+– apellido2 (cadena de caracteres)
+– dominio (cadena de caracteres)
+- salida :
+– email (cadena de caracteres)
+devuelva una dirección de correo electrónico con el siguiente formato:
+• El primer carácter del parámetro nombre.
+• Los tres primeros caracteres del parámetro apellido1.
+• Los tres primeros caracteres del parámetro apellido2.
+• El carácter @.
+• El dominio pasado como parámetro.
+*/
+
+delimiter $$
+drop procedure if exists asignacion_email$$
+create procedure asignacion_email(in nombre varchar(20),in apellido1 varchar(20),in apellido2 varchar(20),in dominio varchar(20),out correo varchar (70))
+begin
+	set correo = concat(substring(nombre,1,1),substring(apellido1,1,3),substring(apellido2,1,3),"@",dominio);
+end
+$$
+delimiter ;
+
+call asignacion_email('Brayan','Ochoa','Botero','Ooutlook.es',@correo);
+select @correo;
+call asignacion_email('Pepito', 'Perez', 'Zuluaga','gmail.es',@correo);
+select @correo;
+select * from alumnos;
 
 
+/*delimiter $$
+drop procedure if exists asignar_email$$
+create procedure asignar_email()
+begin
+declare accion int default false;
+declare id int;
+declare nombre_alumno varchar (50);
+declare alumno_apellido1 varchar (50);
+declare alumno_apellido2 varchar (50);
+declare dominio varchar (50);
+declare email varchar (70);
+declare contador int;
+declare cursor1 cursor for select id,nombre,apellido1,apellido2 from alumnos;
+declare continue handler for not found set accion = true;
+
+open cursor1;
+
+bucle:loop
+fetch cursor1 into email;
+if accion then
+leave bucle;
+end if;
+update alumnos set email = asignacion_email(email)
+where contador = id;
+end loop;
+close cursor1;
+end
+$$
+delimiter ;
+
+call asignacion_email();*/
 
 
+delimiter $$
+DROP PROCEDURE IF EXISTS asignarCorreo$$
+CREATE PROCEDURE asignarCorreo()
+BEGIN
+  DECLARE accion INT DEFAULT FALSE;
+  DECLARE aux_nombre VARCHAR(50);
+  DECLARE aux_apellido1 VARCHAR(50);
+  DECLARE aux_apellido2 VARCHAR(50);
+  DECLARE aux_id INT;
+  DECLARE cursor1 CURSOR FOR SELECT id, nombre,apellido1,apellido2 FROM alumnos;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET accion = TRUE;
 
+  OPEN cursor1;
 
+  bucle: LOOP
+    FETCH cursor1 INTO aux_id, aux_nombre,aux_apellido1,aux_apellido2;
+    IF accion THEN
+      LEAVE bucle;
+    END IF;
+    CALL asignacion_email(aux_nombre, aux_apellido1, aux_apellido2, 'outlook.es', @correo);
+   	UPDATE alumnos SET email = @correo
+   	WHERE aux_id = id;
+  END LOOP;
+  CLOSE cursor1;
+END$$
+delimiter ;
 
+call asignarCorreo();
 
-
-
+/*Este procedimiento hará uso del procedimiento crear_email que hemos creado en el paso anterior.
+3. Escribe un procedimiento llamado crear_lista_emails_alumnos que devuelva la lista de emails de la tabla alumnos separados por un punto y coma. Ejemplo: juan@ccc.org; maria@ccc.org; pepe@ccc.org; lucia@ccc.org .*/
 
 
 
