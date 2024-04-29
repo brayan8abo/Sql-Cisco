@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_fBD0cAU7Ee-D1-pqR0AEMA" name="ActividadEduardo">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_fBt7wAU7Ee-D1-pqR0AEMA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_gJT18AU7Ee-D1-pqR0AEMA" name="Cliente">
+    <generalization xmi:type="uml:Generalization" xmi:id="_imOp4AVzEe-js-KjpfnCpg" general="_kifcsAU7Ee-D1-pqR0AEMA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_gs2A0AU7Ee-D1-pqR0AEMA" name="admin">
+    <generalization xmi:type="uml:Generalization" xmi:id="_jSLJ4AVzEe-js-KjpfnCpg" general="_23_0YAU7Ee-D1-pqR0AEMA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_jxCxoAU7Ee-D1-pqR0AEMA" name="Class4" useCase="_kifcsAU7Ee-D1-pqR0AEMA _nIOI0AU7Ee-D1-pqR0AEMA _p0XmAAU7Ee-D1-pqR0AEMA _sNYr0AU7Ee-D1-pqR0AEMA _23_0YAU7Ee-D1-pqR0AEMA">
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_kifcsAU7Ee-D1-pqR0AEMA" name="Comprar Producto" subject="_jxCxoAU7Ee-D1-pqR0AEMA">
+      <include xmi:type="uml:Include" xmi:id="_1IatIAU7Ee-D1-pqR0AEMA" addition="_sNYr0AU7Ee-D1-pqR0AEMA"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_nIOI0AU7Ee-D1-pqR0AEMA" name="Buscar Producto" subject="_jxCxoAU7Ee-D1-pqR0AEMA">
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_zPXg0AU7Ee-D1-pqR0AEMA" name="ExtensionPoint1"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_p0XmAAU7Ee-D1-pqR0AEMA" name="Recuperar Producto" subject="_jxCxoAU7Ee-D1-pqR0AEMA">
+      <extend xmi:type="uml:Extend" xmi:id="_zPW5wAU7Ee-D1-pqR0AEMA" extendedCase="_nIOI0AU7Ee-D1-pqR0AEMA" extensionLocation="_zPXg0AU7Ee-D1-pqR0AEMA"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_sNYr0AU7Ee-D1-pqR0AEMA" name="Registrar Producto" subject="_jxCxoAU7Ee-D1-pqR0AEMA">
+      <include xmi:type="uml:Include" xmi:id="_xUiL0AU7Ee-D1-pqR0AEMA" addition="_nIOI0AU7Ee-D1-pqR0AEMA"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_23_0YAU7Ee-D1-pqR0AEMA" name="Insertar Producto" subject="_jxCxoAU7Ee-D1-pqR0AEMA"/>
+  </packagedElement>
+</uml:Model>

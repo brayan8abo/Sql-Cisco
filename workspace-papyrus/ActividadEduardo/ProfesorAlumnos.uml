@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_qgjcIAVzEe-js-KjpfnCpg" name="ProfesorAlumnos">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_qhURIAVzEe-js-KjpfnCpg">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_rWeXgAVzEe-js-KjpfnCpg" name="Profesor">
+    <generalization xmi:type="uml:Generalization" xmi:id="_95x6oAVzEe-js-KjpfnCpg" general="_wBYncAVzEe-js-KjpfnCpg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_sMdkUAVzEe-js-KjpfnCpg" name="Alumno"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_udM34AVzEe-js-KjpfnCpg" name="Class4" useCase="_wBYncAVzEe-js-KjpfnCpg _zE-UQAVzEe-js-KjpfnCpg _0AdFEAVzEe-js-KjpfnCpg _5Qlh8AVzEe-js-KjpfnCpg">
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_wBYncAVzEe-js-KjpfnCpg" name="Ingresar notas" subject="_udM34AVzEe-js-KjpfnCpg">
+      <include xmi:type="uml:Include" xmi:id="_IRpGUAV0Ee-js-KjpfnCpg" addition="_0AdFEAVzEe-js-KjpfnCpg"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_zE-UQAVzEe-js-KjpfnCpg" name="Modificar notas" subject="_udM34AVzEe-js-KjpfnCpg">
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_Oycg4AV0Ee-js-KjpfnCpg" name="ExtensionPoint1"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_0AdFEAVzEe-js-KjpfnCpg" name="Obtener listado de notas" subject="_udM34AVzEe-js-KjpfnCpg">
+      <extend xmi:type="uml:Extend" xmi:id="_Oyb50AV0Ee-js-KjpfnCpg" extendedCase="_zE-UQAVzEe-js-KjpfnCpg" extensionLocation="_Oycg4AV0Ee-js-KjpfnCpg"/>
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_PbA8wQV0Ee-js-KjpfnCpg" name="ExtensionPoint2"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_5Qlh8AVzEe-js-KjpfnCpg" name="Consultar notas" subject="_udM34AVzEe-js-KjpfnCpg">
+      <extend xmi:type="uml:Extend" xmi:id="_PbA8wAV0Ee-js-KjpfnCpg" extendedCase="_0AdFEAVzEe-js-KjpfnCpg" extensionLocation="_PbA8wQV0Ee-js-KjpfnCpg"/>
+    </ownedUseCase>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_P6qGIAV0Ee-js-KjpfnCpg" client="_sMdkUAVzEe-js-KjpfnCpg" supplier="_5Qlh8AVzEe-js-KjpfnCpg"/>
+</uml:Model>
