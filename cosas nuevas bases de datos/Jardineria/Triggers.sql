@@ -69,3 +69,61 @@ declare error1 varchar (100);
     
     select @error1;
     
+    
+    delimiter $$
+drop trigger if exists before_jefeSIGNAL$$
+create trigger before_jefeSIGNAL
+before insert on empleados 
+for each row
+begin
+declare supervisa integer;
+declare error1 varchar (100);
+	select count(*)into supervisa from empleados where mgr = new.mgr;
+    if(supervisa >= 4) then 
+	set @msg =concat(new.mgr," ", 'No se puede supervisar mas de 4');
+    signal sqlstate '45000' set message_text = @msg;
+    end if;
+    
+    end
+    $$
+    delimiter ;
+    
+    
+    
+insert into empleados values('41000','Jose','1234',1000,2500,'2025-04-29');
+insert into empleados values('1222','Pepino','1234',1000,2500,'2025-04-29');
+insert into empleados values('121','Torta','1234',1000,2500,'2025-04-29');
+insert into empleados values('333','Josuee','1234',1000,2500,'2025-04-29');
+insert into empleados values('4444','Jeso','1234',1000,2500,'2025-04-29');
+    select @msg;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    delimiter $$
+    drop trigger if exists aumentoSalario$$
+    create trigger aumentoSalario
+    before update on empleados for each row
+    begin
+    declare calculoSalario double default old.salario*20/100;
+    declare salarioNuevo double default old.salario+calculoSalario;
+    
+    if salarioNuevo > new.salario then
+    set @msg = concat(new.salario, " " , 'No puede ser aumentado en un 20% el salario');
+    signal sqlstate  '45000' set message_text = @msg;
+    end if;
+    end$$
+    
+    delimiter ;
+    
+    update empleados set salario = 10400000;
+    
+    
+    
+    
