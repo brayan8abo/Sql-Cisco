@@ -125,5 +125,27 @@ insert into empleados values('4444','Jeso','1234',1000,2500,'2025-04-29');
     update empleados set salario = 10400000;
     
     
+    delimiter $$
+    drop trigger if exists sueldoJefe$$
+    create trigger sueldoJefe after update on empleados
+    for each row 
+    begin
+    
+    declare salarioJefe double;
+    
+    set salarioJefe = (select max(salario) from empleados where mgr = old.mgr);
+    
+    if new.salario >= salarioJefe then
+    
+    update empleados set  salario = new.salario where dni = old.mgr;
+    end if;
+    end
+    
+    
+    delimiter ;
+    
+    update empleados set salario = 1300 where dni = '51754822s';
+    insert into empleados values ('51754822s','Mary','123',1000,789,'2022-2-2');
+    
     
     
