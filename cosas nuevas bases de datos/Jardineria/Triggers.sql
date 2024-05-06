@@ -125,7 +125,7 @@ insert into empleados values('4444','Jeso','1234',1000,2500,'2025-04-29');
     update empleados set salario = 10400000;
     
     
-    delimiter $$
+    delimiter $$ -- NO SE PUEDE HACER UN TRIGER QUE HAGA UNA MODIFICACION SOBRE UNA MISMA TABLA
     drop trigger if exists sueldoJefe$$
     create trigger sueldoJefe after update on empleados
     for each row 
@@ -148,4 +148,83 @@ insert into empleados values('4444','Jeso','1234',1000,2500,'2025-04-29');
     insert into empleados values ('51754822s','Mary','123',1000,789,'2022-2-2');
     
     
+    delimiter $$
+    create procedure aumento_salario(in dni char(9),in salario_nuevo double)
     
+    create table socios (
+    id int auto_increment,
+    nombre varchar(100) not null,
+    email varchar (255),
+    anonacimiento date,
+    primary key (id)
+    );
+    
+    
+    create table recordatorios (
+    id int auto_increment,
+    idsocio int,
+    mensaje varchar(255) not null,
+    primary key (id,idsocio));
+
+    
+    insert into socios values (1,'Pepito Perez','pepito@outlook.es','2000-8-11');
+    
+    insert into recordatorios values (1,1,'El pedido que usted ha realizado se a efectuado correctamente, esperamos verlo nuevamente por nuestras instalaciones');
+    
+    
+    -- borrar un socio se borra recordatorio asocuiado
+    delimiter $$
+    drop trigger if exists recordatorio$$
+    create trigger recordatorio after delete on socios
+    for each row
+    begin
+    delete from recordatorios where idsocio = old.id;
+    end
+    $$
+    
+    delete from socios where id = 1;
+    
+    
+    delimiter $$
+    drop trigger if exists socio_nuevo;
+    create trigger socio_nuevo before insert on socios
+    for each row
+    begin
+    
+    declare edad int;
+    
+  SET edad = year(curdate()) - year (new.anonacimiento); -- se le resta al año
+  SET edad = TIMESTAMPDIFF(YEAR, NEW.anonacimiento, CURDATE());
+
+    -- Verificar si el nuevo socio es mayor de 18 años
+    IF edad < 18 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El nuevo socio debe ser mayor de 18 años';
+    END IF;
+END$$
+
+delimiter ;
+    insert into socios values (1,'Noel','Noeldomse#gmail.com','2000-02-02');
+    
+    create table registro_socios(
+    id int auto_increment,
+    idsocio int,
+    nombre_anterior varchar (100),
+    nombre_nuevo varchar (100), 
+    email_anterior varchar (250),
+    email_nuevo varchar (250),
+    edad_anterior int,
+    edad_nueva int,
+    fecha_anterior date,
+    fecha_nueva date,
+    fecha_actualizacion date,
+    primary key (id,idsocio))
+    ;
+    
+    
+    create trigger registros_socios before update on socios
+    for each row
+    begin
+    insert into registros_socios (id,idsocio,nombre_anterior,nombre_nuevo,email_anterior,email_nuevo,edad_anterior,edad_nueva,fecha_anterior,fecha_nueva,fecha_actualizacion) 
+    values (old.id,new.id,old.idsocio,new.idsocio,old.nombre,new.nombre,old.email,new.email,old.edad,old,new.edad,old.anonacimiento,new.anonacimiento,current_date());
+    end$$
+    delimiter ;
