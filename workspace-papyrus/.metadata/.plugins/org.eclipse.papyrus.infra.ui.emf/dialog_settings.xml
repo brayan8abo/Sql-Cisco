@@ -32,4 +32,16 @@
 			</list>
 		</section>
 	</section>
+	<section name="org.eclipse.papyrus.infra.ui.emf.providers.EMFGraphicalContentProvider_history__platform:/resource/Actividad/Actividad.uml:uml:Type:type">
+		<section name="History">
+			<list key="PreviousSelection">
+				<item value="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+				<item value="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+				<item value="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDate"/>
+				<item value="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDouble"/>
+			</list>
+		</section>
+	</section>
+	<section name="org.eclipse.papyrus.infra.ui.emf.providers.EMFGraphicalContentProvider_org.eclipse.papyrus.infra.hyperlink.specificHyperLinks">
+	</section>
 </section>

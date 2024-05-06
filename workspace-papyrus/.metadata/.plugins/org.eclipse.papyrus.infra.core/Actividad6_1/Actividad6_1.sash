@@ -3,7 +3,11 @@
   <di:SashWindowsMngr>
     <sashModel currentSelection="/0/@sashModel/@windows.0/@children.0" restoreActivePage="true">
       <windows>
-        <children xsi:type="di:TabFolder"/>
+        <children xsi:type="di:TabFolder">
+          <children>
+            <emfPageIdentifier href="platform:/resource/Actividad6_1/Actividad6_1.notation#_61lywPXOEe6gPYlw8cz25w"/>
+          </children>
+        </children>
       </windows>
     </sashModel>
   </di:SashWindowsMngr>

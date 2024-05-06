@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_HI2iYADLEe-_xYV9KD4YHw" name="actividad2">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_HKPpgADLEe-_xYV9KD4YHw">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_b3_q8ADLEe-_xYV9KD4YHw" name="Cliente">
+    <generalization xmi:type="uml:Generalization" xmi:id="_sS8doADPEe-_xYV9KD4YHw" general="_zE9g0ADLEe-_xYV9KD4YHw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_yhHM4ADLEe-_xYV9KD4YHw" name="Class3" useCase="_zE9g0ADLEe-_xYV9KD4YHw _21DuUADLEe-_xYV9KD4YHw _ewBEIADPEe-_xYV9KD4YHw _g4aUAADPEe-_xYV9KD4YHw _WDCQcADQEe-_xYV9KD4YHw">
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_zE9g0ADLEe-_xYV9KD4YHw" name="comprar producto" subject="_yhHM4ADLEe-_xYV9KD4YHw">
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_oP9zkADTEe-_xYV9KD4YHw" name="ExtensionPoint2"/>
+      <include xmi:type="uml:Include" xmi:id="_nPIwEADQEe-_xYV9KD4YHw" addition="_g4aUAADPEe-_xYV9KD4YHw"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_21DuUADLEe-_xYV9KD4YHw" name="insertarProducto" subject="_yhHM4ADLEe-_xYV9KD4YHw"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_ewBEIADPEe-_xYV9KD4YHw" name="registrarCliente" subject="_yhHM4ADLEe-_xYV9KD4YHw">
+      <extend xmi:type="uml:Extend" xmi:id="_oPzbgADTEe-_xYV9KD4YHw" extendedCase="_zE9g0ADLEe-_xYV9KD4YHw" extensionLocation="_oP9zkADTEe-_xYV9KD4YHw"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_g4aUAADPEe-_xYV9KD4YHw" name="recuperarProducto" subject="_yhHM4ADLEe-_xYV9KD4YHw">
+      <extend xmi:type="uml:Extend" xmi:id="_osQG8ADTEe-_xYV9KD4YHw" extendedCase="_WDCQcADQEe-_xYV9KD4YHw" extensionLocation="_osRVEADTEe-_xYV9KD4YHw"/>
+    </ownedUseCase>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_WDCQcADQEe-_xYV9KD4YHw" name="buscarProducto" subject="_yhHM4ADLEe-_xYV9KD4YHw">
+      <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_osRVEADTEe-_xYV9KD4YHw" name="ExtensionPoint1"/>
+    </ownedUseCase>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_t1oYYADPEe-_xYV9KD4YHw" name="Actor6">
+    <generalization xmi:type="uml:Generalization" xmi:id="_BuYrgADQEe-_xYV9KD4YHw" general="_21DuUADLEe-_xYV9KD4YHw"/>
+  </packagedElement>
+</uml:Model>
