@@ -205,6 +205,7 @@ END$$
 delimiter ;
     insert into socios values (1,'Noel','Noeldomse#gmail.com','2000-02-02');
     
+    drop table if exists registro_socios;
     create table registro_socios(
     id int auto_increment,
     idsocio int,
@@ -212,19 +213,71 @@ delimiter ;
     nombre_nuevo varchar (100), 
     email_anterior varchar (250),
     email_nuevo varchar (250),
-    edad_anterior int,
-    edad_nueva int,
-    fecha_anterior date,
-    fecha_nueva date,
+    anonacimiento_anterior date,
+    anonacimiento_nuevo date,
     fecha_actualizacion date,
     primary key (id,idsocio))
     ;
     
+
+delimiter $$
+drop trigger if exists actualizar_registro;
+create trigger actualizar_registro after update on socios
+for each row
+begin
+if old.nombre != new.nombre or old.email != new.email or old.anonacimiento != new.anonacimiento then
+	insert registro_socios (idsocio,nombre_anterior,nombre_nuevo,email_anterior,email_nuevo,anonacimiento_anterior,anonacimiento_nuevo,fecha_actualizacion) 
+	values (old.id,old.nombre,new.nombre,old.email,new.email,old.anonacimiento,new.anonacimiento,now());
+end if;
+end $$
     
-    create trigger registros_socios before update on socios
+    update socios set nombre = "Pepito";
+    
+    update socios set nombre = "Pepito", email = "pepito@outlook.es", anonacimiento = '2020-05-4';
+    
+    
+    
+    delimiter $$
+    drop trigger if exists actualizar_recordatorio$$
+    create trigger actualizar_recordatorio after update on socios
     for each row
     begin
-    insert into registros_socios (id,idsocio,nombre_anterior,nombre_nuevo,email_anterior,email_nuevo,edad_anterior,edad_nueva,fecha_anterior,fecha_nueva,fecha_actualizacion) 
-    values (old.id,new.id,old.idsocio,new.idsocio,old.nombre,new.nombre,old.email,new.email,old.edad,old,new.edad,old.anonacimiento,new.anonacimiento,current_date());
-    end$$
-    delimiter ;
+    
+    insert into recordatorios (idsocio,mensaje) values (old.id,concat('Se ha cambiado el nombre a: ',new.nombre, ', antes era: ', old.nombre));
+    end
+    $$
+    
+    update socios set nombre = "Carlitos";
+    
+    
+    create table recordatorios_backup(
+    id int auto_increment,
+    idsocio int,
+    mensaje varchar (255),
+    primary key (id,idsocio));
+    
+    
+    delimiter $$
+    drop trigger if exists recordatorios$$
+    create trigger recordatorios before delete on socios
+    for each row
+    begin
+    
+    insert into  recordatorios_backup (idsocio, mensaje)
+    select idsocio, mensaje
+    from recordatorios
+    where idsocio = old.id;
+    
+
+    end
+    $$
+    
+   delimiter ;
+   
+
+delete from socios where id = 1;
+
+delete from socios where id =2;
+delete from socios where id =3;
+ despues de insertar actualziar la tabla neuva dle trigger
+   
