@@ -279,5 +279,5 @@ delete from socios where id = 1;
 
 delete from socios where id =2;
 delete from socios where id =3;
- despues de insertar actualziar la tabla neuva dle trigger
+ -- nombredespues de insertar actualziar la tabla neuva dle trigger
    
