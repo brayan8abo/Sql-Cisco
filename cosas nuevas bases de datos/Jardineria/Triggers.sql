@@ -279,5 +279,39 @@ delete from socios where id = 1;
 
 delete from socios where id =2;
 delete from socios where id =3;
- -- nombredespues de insertar actualziar la tabla neuva dle trigger
+
+
+create table historico_recordatorios (
+id int auto_increment primary key,
+fecha_traspaso date,
+idsocio int,
+mensaje varchar (255),
+fecha_creacion date
+);
+
+
+delimiter $$
+    drop trigger if exists arecordatorios_lleno$$
+    create trigger arecordatorios_lleno before insert on recordatorios
+    for each row
+    begin
+    
+    declare conteo int default ( select count(*) from recordatorios);
+    
+    if conteo > 5 then
+    
+    INSERT INTO historico_recordatorios (fecha_traspaso, idsocio, mensaje, fecha_creacion)
+	SELECT curdate(), idsocio, mensaje, fecha_recordatorio FROM recordatorios;
+
+	END IF;
+    end
+    $$
+    
+   delimiter ;
+   
+   update socios set nombre = "PerroSetenta";
+   
+   insert into recordatorios(idsocio,mensaje,fecha_recordatorio) values (7,'jjejsadljfhkjsdhfsdfsdfsdfsdfsdfsdejejej',curdate());
+
+
    
