@@ -86,6 +86,8 @@ INSERT INTO Doctor(Hospital_Cod,Doctor_No,Apellido,Especialidad) VALUES(45,607,'
 INSERT INTO Doctor(Hospital_Cod,Doctor_No,Apellido,Especialidad) VALUES(18,982,'Cajal R.','Cardiología');
 
 
+drop table sala;
+
 -- Insertar datos en la tabla Sala
 INSERT INTO SALA VALUES(1,22,'Recuperación',10);
 INSERT INTO SALA VALUES(1,45,'Recuperación',15);
@@ -111,6 +113,7 @@ VALUES
 (22,6,8422,'Bocina G.','Enfermero','M',183800),
 (45,1,8526,'Frank H.','Enfermera','T',252200),
 (22,2,9901,'Núñez C.','Interino','M',221000);
+truncate plantilla;
 
 -- Insertar datos en la tabla Enfermo
 INSERT INTO Enfermo(Inscripcion,Apellido,Direccion,Fecha_Nac,S,NSS)
@@ -125,7 +128,7 @@ VALUES
 (63827,'Ruiz P.','Ezquerdo 103','26-dic-80','M',100973253),
 (64823,'Fraiser A.','Soto 3','10-jul-80','F',285201776),
 (74835,'Benítez E.','Argentina','05-oct-57','M',154811767);
-
+truncate enfermo;
 
 -- Insertar datos en la tabla Emp
 INSERT INTO Emp( Emp_No, Apellido, Oficio, Dir, Fecha_Alt, Salario, Comision, Dept_No) VALUES
@@ -145,52 +148,96 @@ INSERT INTO Emp( Emp_No, Apellido, Oficio, Dir, Fecha_Alt, Salario, Comision, De
 (7934,'MUÑOZ','EMPLEADO',7782,'1982-06-23',169000,0,10),
 (7119,'SERRA','DIRECTOR',7839,'1983-11-19',225000,39000,20),
 (7322,'GARCIA','EMPLEADO',7119,'1982-10-12',129000,0,20);
+truncate emp;
 
 
-
+truncate registrosborrados;
+CREATE TABLE registrosBorrados (
+    id INT AUTO_INCREMENT,
+    descripcion VARCHAR(255),
+    PRIMARY KEY (id)
+);
 
 /*1) Crear un Trigger que borre en cascada sobre la tabla relacionada cuando borremos una sala.
 Mostrar el registro borrado al ejecutar el Trigger.*/
-
-
-create table 
-
 delimiter $$
 drop trigger if exists borrado$$
-create trigger borrado before delete on sala 
+create trigger borrado after delete on sala 
 for each row
 begin
-delete from plantilla where plantilla.sala_cod = old.sala_cod;
+declare emp_no int;
+declare done int default false;
+
+declare cursor1 cursor for 
+	select Empleado_No from plantilla where Sala_Cod = old.Sala_Cod;
+
+declare continue handler for not found set done = true;
+
+open cursor1;
+
+loop_empleado: LOOP
+fetch cursor1 into emp_no;
+if done then
+leave loop_empleado;
+end if;
+
+insert into registrosborrados(descripcion)
+values (concat('Se ha eliminado la sala con codigo:' , old.sala_cod, '. Numero de empleado afectado: ', emp_no));
+end loop loop_empleado;
+close cursor1;
+
+DELETE FROM plantilla 
+WHERE
+    sala_cod = old.sala_cod;
 end
-$$
+ $$
 
-DELETE FROM Sala WHERE sala_cod = 1;
+delimiter ;
+DELETE FROM Sala WHERE sala_cod = 2;
 
-
-delimiter $$
-drop trigger if exists borradoSala$$
-create trigger borradoSala before delete on sala
-for each row
-begin
-
-delete from plantilla where sala.old.sala_cod = plantilla.sala_cod;
-
-end
-$$
 
 /*2) Crear un Trigger que se active cuando Actualicemos alguna sala del hospital, modificando sus
 tablas relacionadas. Mostrar el registro Actualizado*/
 
+CREATE TABLE registro_actualizado (
+    sala_cod INT,
+    hospital_cod INT,
+    nombre VARCHAR(50),
+    num_cam INT
+);
+
+drop trigger actualizacion;
+
 delimiter $$
-drop trigger if exists actualizaciones$$
+drop trigger if exists actualizacion$$
 create trigger actualizacion after update on sala
 for each row
-IF new.descripcion != old.descripcion or new.capacidad != old.capacidad THEN
-        select concat('Se actualizó la sala con ID: ', new.sala_cod) AS Mensaje;
-    END IF;
-
-update 
-
 begin
+declare hospital_cod int;
+declare done int default false;
+
+declare cursor2 cursor for
+ select * from sala where Hospital_Cod = old.Hospital_Cod;
+ 
+declare continue handler for not found set done = true;
+
+open cursor2;
+
+actualizaciones: LOOP
+fetch cursor2 into hospital_cod;
+if done then
+leave actualizaciones;
+ end if;
+ 
+ insert into registro_actualizado(Hospital_Cod) values (concat('Se ha actualizador correctamente el hospital con codigo:' , old.hospital_cod));
+ end loop;
+ close cursor2;
+ 
 end
 $$
+
+delimiter ;
+
+update sala set nombre = "Cuidados intensivos" where hospital_cod = 2;
+
+
