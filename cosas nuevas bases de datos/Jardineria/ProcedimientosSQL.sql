@@ -174,7 +174,7 @@ delimiter ;
 call transaccion_en_mysql();
 select @error1;
 
-
+conectate a pabl
 
 
 

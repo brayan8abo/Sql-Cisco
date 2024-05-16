@@ -229,7 +229,7 @@ if done then
 leave actualizaciones;
  end if;
  
- insert into registro_actualizado(Hospital_Cod) values (concat('Se ha actualizador correctamente el hospital con codigo:' , old.hospital_cod));
+ insert into registro_actualizado(Hospital_Cod) values (concat('Se ha actualizado correctamente el hospital con codigo:' , old.hospital_cod));
  end loop;
  close cursor2;
  
