@@ -584,7 +584,7 @@ MySQL:
 • DATEDIFF
 • TRUNCATE*/
 
-
+diferencia_años
 delimiter $$
 drop FUNCTION if exists diferencia_años $$
 create FUNCTION diferencia_años(anio1 date,anio2 date)

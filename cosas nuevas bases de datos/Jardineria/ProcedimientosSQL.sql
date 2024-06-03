@@ -3,6 +3,9 @@ create function procMaximo(gama varchar (50))
 returns int unsigned
 deterministic
 begin
+
+
+
 	declare maximo int unsigned;
 	set maximo = (
 	select max(precio_venta) from producto
@@ -174,7 +177,7 @@ delimiter ;
 call transaccion_en_mysql();
 select @error1;
 
-conectate a pabl
+
 
 
 

@@ -148,7 +148,47 @@ BEGIN
 END;
 
 
+-- ------------------------------------------------------------------
 
+
+-- Crear una tabla para almacenar información de clientes
+CREATE TABLE Clientes (
+    ID INT PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Saldo DECIMAL(10, 2)
+);
+
+-- Crear un procedimiento almacenado que inserta un nuevo cliente
+CREATE PROCEDURE InsertarCliente(@ID INT, @Nombre VARCHAR(50), @Saldo DECIMAL(10, 2))
+AS
+BEGIN
+    DECLARE @Error INT;
+    
+    BEGIN TRANSACTION; -- Iniciar la transacción
+    
+    -- Insertar el cliente en la tabla
+    INSERT INTO Clientes (ID, Nombre, Saldo) VALUES (@ID, @Nombre, @Saldo);
+    
+    -- Capturar el estado del error
+    SELECT @Error = @@ERROR;
+    
+    IF @Error = 0
+    BEGIN
+        -- Confirmar la transacción si no hay errores
+        COMMIT TRANSACTION;
+    END
+    ELSE
+    BEGIN
+        -- Si ocurre un error, deshacer la transacción
+        ROLLBACK TRANSACTION;
+    END
+END;
+
+-- Ejecutar el procedimiento almacenado para insertar un nuevo cliente
+CALL InsertarCliente(1, 'Ejemplo Cliente', 1000.00);
+
+
+-- -------------------------------------------------
 
 
 
